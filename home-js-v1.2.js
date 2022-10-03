@@ -62,14 +62,14 @@ $( document ).ready(function() {
     $('.chk-home-delivery-val-v1').hide();
 	  
     $(function(){
-      $('[name="home-delivery"]').change(function(){
+      $('[name="home-delivery-v1"]').change(function(){
         if ($(this).is(':checked')) {
-           $('.chk-home-delivery-val').show();
-           console.log(parseFloat(intcust) +"/"+ td_cost +"/"+parseFloat(shipprotection));
-           $("#total-cost-1").html(parseFloat(intcust)+parseFloat(td_cost)+parseFloat(shipprotection));
+           $('.chk-home-delivery-val-v1').show();
+           console.log(parseFloat(intcustv1) +"/"+ td_cost +"/"+parseFloat(shipprotectionv1));
+           $("#total-cost-1").html(parseFloat(intcustv1)+parseFloat(td_costv1)+parseFloat(shipprotectionv1));
         }else{
-		$('.chk-home-delivery-val').hide();
-		$("#total-cost-1").html(parseFloat(intcust)+parseFloat(shipprotection));
+		$('.chk-home-delivery-val-v1').hide();
+		$("#total-cost-1").html(parseFloat(intcustv1)+parseFloat(shipprotectionv1));
         }
       });
     });
