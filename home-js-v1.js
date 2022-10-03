@@ -4,12 +4,14 @@
 var app=document.getElementById("dynamic-text"),typewriter=new Typewriter(app,{loop:!0});typewriter.typeString("Mombasa").pauseFor(2500).deleteAll().typeString("Nanyuki").pauseFor(2500).deleteAll().typeString("Nairobi").pauseFor(2500).deleteAll().typeString("Kisumu").pauseFor(2500).deleteAll().typeString("Kitale").pauseFor(2500).deleteAll().typeString("Nyeri").pauseFor(2500).start();
   
   $( document ).ready(function() {
-  		var rateperkg=15,totalcost,td_cost,intcust,shipprotection=0;
+      var rateperkg=15,totalcost,td_cost,intcust,shipprotection=0;
       var td_costv1,intcustv1,shipprotectionv1=0;
+
       const formatter = new Intl.NumberFormat('en-US', {
          minimumFractionDigits: 2,      
          maximumFractionDigits: 2,
       });
+	  
       $('.cost-calc input').on('input', function() {
         $('#actual-weight').val() ? $('#actual-weight').css({'border-color': '#737373'}) : $('#actual-weight').css({'border-color': 'red'});
       	 $('#dimensions-length').val() ? $('#dimensions-length').css({'border-color': '#737373'}) : $('#dimensions-length').css({'border-color': 'red'});
@@ -27,10 +29,10 @@ var app=document.getElementById("dynamic-text"),typewriter=new Typewriter(app,{l
           intcustv1 = (weight1 > weight2) ? (weight1*15) : (weight2*15);
           $('.intcustom-v1').text("$"+parseFloat(intcustv1).toFixed(2));
           
-          if(td_cost > 3){
+          if(td_costv1 > 3){
           	$('.chk-home-delivery-val-v1').text("$"+parseFloat(td_costv1).toFixed(2));
           }else{
-          	td_cost = 3;
+          	td_costv1 = 3;
           	$('.chk-home-delivery-val-v1').text("$3.00");
           }
           
@@ -40,7 +42,7 @@ var app=document.getElementById("dynamic-text"),typewriter=new Typewriter(app,{l
              $("#total-cost-v1").html(formatter.format(parseFloat(intcustv1)+parseFloat(shipprotectionv1)));
           }
         }else{
-        	$('.note__about-cost-v1').hide();
+            $('.note__about-cost-v1').hide();
         }
       });
     
@@ -48,19 +50,22 @@ var app=document.getElementById("dynamic-text"),typewriter=new Typewriter(app,{l
     {
       $('[name="check-shipment-v1"]').change(function()
       {
-        shipprotection = 0;
-        if ($(this).is(':checked')) {
-           $('.shipment-div-v1').show();
+        shipprotectionv1 = 0;
+        
+	if ($(this).is(':checked')) {
+		$('.shipment-div-v1').show();
         }else{
-        	$('.shipment-div-v1').hide();
-					$('.chk-shipment-protection-val-v1').text('');
-          $('.shipping-amount-v1').val('');
-          $("#total-cost-v1").html(parseFloat(intcustv1)+parseFloat(shipprotectionv1)+parseFloat(td_costv1));
+		$('.shipment-div-v1').hide();
+		$('.chk-shipment-protection-val-v1').text('');
+		$('.shipping-amount-v1').val('');
+		$("#total-cost-v1").html(parseFloat(intcustv1)+parseFloat(shipprotectionv1)+parseFloat(td_costv1));
         };
+
       });
     });
     
-    $('.chk-home-delivery-val').hide();
+    $('.chk-home-delivery-val-v1').hide();
+	  
     $(function(){
       $('[name="home-delivery"]').change(function(){
         if ($(this).is(':checked')) {
@@ -68,16 +73,16 @@ var app=document.getElementById("dynamic-text"),typewriter=new Typewriter(app,{l
            console.log(parseFloat(intcust) +"/"+ td_cost +"/"+parseFloat(shipprotection));
            $("#total-cost-1").html(parseFloat(intcust)+parseFloat(td_cost)+parseFloat(shipprotection));
         }else{
-       		 $('.chk-home-delivery-val').hide();
-           $("#total-cost-1").html(parseFloat(intcust)+parseFloat(shipprotection));
+		$('.chk-home-delivery-val').hide();
+		$("#total-cost-1").html(parseFloat(intcust)+parseFloat(shipprotection));
         }
       });
     });
     
-  	$('.shipping-amount').on('input', function() {
-    	shipprotection = ($(this).val() < 100) ? 0 : ($(this).val()*5)/100;
-       $('.chk-shipment-protection-val').text("$"+formatter.format(parseFloat(shipprotection)));
-       $("#total-cost-1").html(formatter.format(parseFloat(shipprotection)+parseFloat(intcust)+parseFloat(td_cost)));
+  $('.shipping-amount-v1').on('input', function() {
+    	shipprotectionv1 = ($(this).val() < 100) ? 0 : ($(this).val()*5)/100;
+       $('.chk-shipment-protection-val-v1').text("$"+formatter.format(parseFloat(shipprotectionv1)));
+       $("#total-cost-1").html(formatter.format(parseFloat(shipprotectionv1)+parseFloat(intcustv1)+parseFloat(td_costv1)));
     });
     
     $(function()
@@ -89,7 +94,7 @@ var app=document.getElementById("dynamic-text"),typewriter=new Typewriter(app,{l
            $('.shipment-div').show();
         }else{
         	$('.shipment-div').hide();
-					$('.chk-shipment-protection-val').text('');
+		$('.chk-shipment-protection-val').text('');
           $('.shipping-amount').val('');
           $("#total-cost-1").html(parseFloat(intcust)+parseFloat(shipprotection)+parseFloat(td_cost));
         };
@@ -109,7 +114,7 @@ var app=document.getElementById("dynamic-text"),typewriter=new Typewriter(app,{l
       });
     });
     
-  	$('.shipping-amount').on('input', function() {
+  $('.shipping-amount').on('input', function() {
     	shipprotection = ($(this).val() < 100) ? 0 : ($(this).val()*5)/100;
        $('.chk-shipment-protection-val').text("$"+formatter.format(parseFloat(shipprotection)));
        $("#total-cost-1").html(formatter.format(parseFloat(shipprotection)+parseFloat(intcust)+parseFloat(td_cost)));
