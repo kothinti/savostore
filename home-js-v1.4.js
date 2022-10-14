@@ -53,7 +53,14 @@ $( document ).ready(function() {
 		$('.shipment-div-v1').hide();
 		$('.chk-shipment-protection-val-v1').text('');
 		$('.shipping-amount-v1').val('');
-		$("#total-cost-v1").html(formatter.format(parseFloat(intcustv1)+parseFloat(shipprotectionv1)+parseFloat(td_costv1)));
+		
+		if($('[name="home-delivery-v1"]').is(':checked')) {
+          	   $("#total-cost-v1").html(formatter.format(parseFloat(intcustv1)+parseFloat(shipprotectionv1)+parseFloat(td_costv1)));
+		}else{
+		   $("#total-cost-v1").html(formatter.format(parseFloat(intcustv1)));
+		}
+		
+		
         };
 
       });
@@ -90,8 +97,13 @@ $( document ).ready(function() {
         }else{
         	$('.shipment-div').hide();
 		$('.chk-shipment-protection-val').text('');
-          $('.shipping-amount').val('');
-          $("#total-cost-1").html(formatter.format(parseFloat(intcust)+parseFloat(shipprotection)+parseFloat(td_cost)));
+         	$('.shipping-amount').val('');
+		
+		if($('[name="home-delivery"]').is(':checked')) {
+          	   $("#total-cost-1").html(formatter.format(parseFloat(intcust)+parseFloat(shipprotection)+parseFloat(td_cost)));
+		}else{
+		   $("#total-cost-1").html(formatter.format(parseFloat(intcust)));
+		}
         };
       });
     });
