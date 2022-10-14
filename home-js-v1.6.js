@@ -53,14 +53,12 @@ $( document ).ready(function() {
 		$('.shipment-div-v1').hide();
 		$('.chk-shipment-protection-val-v1').text('');
 		$('.shipping-amount-v1').val('');
-		
+
 		if($('[name="home-delivery-v1"]').is(':checked')) {
-          	   $("#total-cost-v1").html(formatter.format(parseFloat(intcustv1)+parseFloat(shipprotectionv1)+parseFloat(td_costv1)));
+		   $("#total-cost-v1").html(formatter.format(parseFloat(intcustv1)+parseFloat(shipprotectionv1)+parseFloat(td_costv1)));
 		}else{
 		   $("#total-cost-v1").html(formatter.format(parseFloat(intcustv1)));
 		}
-		
-		
         };
 
       });
@@ -84,7 +82,12 @@ $( document ).ready(function() {
   $('.shipping-amount-v1').on('input', function() {
     	shipprotectionv1 = ($(this).val() < 100) ? 0 : ($(this).val()*5)/100;
        $('.chk-shipment-protection-val-v1').text("$"+formatter.format(parseFloat(shipprotectionv1)));
-       $("#total-cost-v1").html(formatter.format(parseFloat(shipprotectionv1)+parseFloat(intcustv1)+parseFloat(td_costv1)));
+	  
+	if($('[name="home-delivery-v1"]').is(':checked')) {
+	   $("#total-cost-v1").html(formatter.format(parseFloat(shipprotectionv1)+parseFloat(intcustv1)+parseFloat(td_costv1)));
+	}else{
+	   $("#total-cost-v1").html(formatter.format(parseFloat(shipprotectionv1)+parseFloat(intcustv1)));
+	}
     });
     
     $(function()
@@ -124,7 +127,12 @@ $( document ).ready(function() {
   $('.shipping-amount').on('input', function() {
     	shipprotection = ($(this).val() < 100) ? 0 : ($(this).val()*5)/100;
        $('.chk-shipment-protection-val').text("$"+formatter.format(parseFloat(shipprotection)));
-       $("#total-cost-1").html(formatter.format(parseFloat(shipprotection)+parseFloat(intcust)+parseFloat(td_cost)));
+	
+	if($('[name="home-delivery"]').is(':checked')) {
+	   $("#total-cost-1").html(formatter.format(parseFloat(shipprotection)+parseFloat(intcust)+parseFloat(td_cost)));
+	}else{
+	   $("#total-cost-1").html(formatter.format(parseFloat(shipprotection)+parseFloat(intcust)));
+	}
     });
     
       $('.cost-calc-1 input').on('input', function() {
@@ -162,7 +170,7 @@ $( document ).ready(function() {
           }
         
         }else{
-        	$('.note__about-cost').hide();
+          $('.note__about-cost').hide();
         }
         
       });
