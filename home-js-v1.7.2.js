@@ -11,33 +11,34 @@ $( document ).ready(function() {
 	  
       $('.cost-calc input').on('input', function() {
         
-	$('#actual-weight').val() ? $('#actual-weight').css({'border-color': '#737373'}) : $('#actual-weight').css({'border-color': 'red'});
-      	$('#dimensions-length').val() ? $('#dimensions-length').css({'border-color': '#737373'}) : $('#dimensions-length').css({'border-color': 'red'});
+	$('#dimensions-length').val() ? $('#dimensions-length').css({'border-color': '#737373'}) : $('#dimensions-length').css({'border-color': 'red'});
       	$('#dimensions-width').val() ? $('#dimensions-width').css({'border-color': '#737373'}) : $('#dimensions-width').css({'border-color': 'red'});
       	$('#dimensions-height').val() ? $('#dimensions-height').css({'border-color': '#737373'}) : $('#dimensions-height').css({'border-color': 'red'});
 				
-        if($('#dimensions-length').val() && $('#dimensions-width').val() && $('#dimensions-height').val() && $('#actual-weight').val()){
-          var weight1 = ($('#dimensions-length').val() * $('#dimensions-width').val() * $('#dimensions-height').val()) / 366;
-          var weight2 = $('#actual-weight').val();
-          $("#total-cost-v1").html((weight1 > weight2) ? formatter.format(weight1*rateperkg) : formatter.format(weight2*rateperkg) );
-          $('.form-actual-weight').html(weight2 + " KG");
-          $('.form-volumetric-weight').html(formatter.format(weight1)  + " KG" );
+        if($('#dimensions-length').val() && $('#dimensions-width').val() && $('#dimensions-height').val()){
+          var CBM = ($('#dimensions-length').val() * $('#dimensions-width').val() * $('#dimensions-height').val()) / cm_divider;
+          var CBF = ($('#dimensions-length').val() * $('#dimensions-width').val() * $('#dimensions-height').val()) / cf_divider;
+          $("#total-cost-v1").text(formatter.format(CBF*rateperkg));
+          $("#form-cbm-v1").html(parseFloat(CBM).toFixed(2));
+          $("#form-cbf-v1").html(parseFloat(CBF).toFixed(2));
           $('.note__about-cost-v1').show();
-          td_costv1 = (weight1 > weight2) ? (weight1*0.60) : (weight2*0.60);
-          intcustv1 = (weight1 > weight2) ? (weight1*15) : (weight2*15);
-          $('.intcustom-v1').text("$"+parseFloat(intcustv1).toFixed(2));
           
-          if(td_costv1 > 3){
-          	$('.chk-home-delivery-val-v1').text("$"+parseFloat(td_costv1).toFixed(2));
+          td_cost = (CBM > CBF) ? (CBM*0.60) : (CBF*0.60);
+          intcust = (CBM > CBF) ? (CBM*15) : (CBF*15);
+          
+          $('.intcustom-v1').text("$"+parseFloat(intcust).toFixed(2));
+          
+          if(td_cost > 3){
+          	$('.chk-home-delivery-val-v1').text("$"+parseFloat(td_cost).toFixed(2));
           }else{
-          	td_costv1 = 3;
+          	td_cost = 3;
           	$('.chk-home-delivery-val-v1').text("$3.00");
           }
           
           if ($('[name="home-delivery-v1"]').is(':checked')) {
-           $("#total-cost-v1").html(formatter.format(parseFloat(intcustv1)+parseFloat(td_costv1)+parseFloat(shipprotectionv1)));
+           $("#total-cost-v1").html(formatter.format(parseFloat(intcust)+parseFloat(td_cost)+parseFloat(shipprotection)));
           }else{
-             $("#total-cost-v1").html(formatter.format(parseFloat(intcustv1)+parseFloat(shipprotectionv1)));
+             $("#total-cost-v1").html(formatter.format(parseFloat(intcust)+parseFloat(shipprotection)));
           }
         }else{
             $('.note__about-cost-v1').hide();
