@@ -163,7 +163,7 @@ $( document ).ready(function() {
           td_cost = (CBM > CBF) ? (CBM*0.60) : (CBF*0.60);
           intcust = (CBM > CBF) ? (CBM*15) : (CBF*15);
 		
-          
+          /*
           $('.intcustom').text("$"+parseFloat(intcust).toFixed(2));
           
           if(td_cost > 3){
@@ -177,7 +177,7 @@ $( document ).ready(function() {
            $("#total-cost-1").html(formatter.format(parseFloat(intcust)+parseFloat(td_cost)+parseFloat(shipprotection)));
           }else{
              $("#total-cost-1").html(formatter.format(parseFloat(intcust)+parseFloat(shipprotection)));
-          }
+          }*/
         }else{
             $('.note__about-cost-v1').hide();
         }
