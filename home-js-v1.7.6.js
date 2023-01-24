@@ -148,6 +148,10 @@ $( document ).ready(function() {
           
 	  var CBM = ($('#dimensions-length-2').val() * $('#dimensions-width-2').val() * $('#dimensions-height-2').val()) / cm_divider;
           var CBF = ($('#dimensions-length-2').val() * $('#dimensions-width-2').val() * $('#dimensions-height-2').val()) / cf_divider;
+		
+	  console.log("CBM: "+CBM);
+	  console.log("CBF: "+CBF);
+	   console.log("rateperkg: "+rateperkg);
           
 	  $("#total-cost-1").text(formatter.format(CBF*rateperkg));
 		
