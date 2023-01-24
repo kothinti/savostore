@@ -25,6 +25,7 @@ $( document ).ready(function() {
           $("#form-cbf-v1").html(parseFloat(CBF).toFixed(2));
           $('.note__about-cost-v1').show();
           
+		
           td_costv1 = (CBM > CBF) ? (CBM*0.60) : (CBF*0.60);
           intcustv1 = (CBM > CBF) ? (CBM*15) : (CBF*15);
           
@@ -148,10 +149,6 @@ $( document ).ready(function() {
           
 	  var CBM = ($('#dimensions-length-2').val() * $('#dimensions-width-2').val() * $('#dimensions-height-2').val()) / cm_divider;
           var CBF = ($('#dimensions-length-2').val() * $('#dimensions-width-2').val() * $('#dimensions-height-2').val()) / cf_divider;
-		
-	  console.log("CBM: "+CBM);
-	  console.log("CBF: "+CBF);
-	   console.log("rateperkg: "+rateperkg);
           
 	  $("#total-cost-1").text(formatter.format(CBF*rateperkg));
 		
@@ -159,11 +156,17 @@ $( document ).ready(function() {
           $("#form-cbf").html(parseFloat(CBF).toFixed(2));
 	
           $('.note__about-cost').show();
-          
-          td_cost = (CBM > CBF) ? (CBM*0.60) : (CBF*0.60);
-          intcust = (CBM > CBF) ? (CBM*15) : (CBF*15);
 		
-          /*
+	  /*
+	  home delivery = Cubic feet * 2.5
+	  Shipment protection = 5% of entered value
+	  Min shipping cost should be $250
+	  */
+          
+          td_cost = (CBF < 250) ? 250 : CBF;
+	  intcust = CBF * 30;
+		
+         
           $('.intcustom').text("$"+parseFloat(intcust).toFixed(2));
           
           if(td_cost > 3){
@@ -177,7 +180,8 @@ $( document ).ready(function() {
            $("#total-cost-1").html(formatter.format(parseFloat(intcust)+parseFloat(td_cost)+parseFloat(shipprotection)));
           }else{
              $("#total-cost-1").html(formatter.format(parseFloat(intcust)+parseFloat(shipprotection)));
-          }*/
+          }
+		
         }else{
             $('.note__about-cost-v1').hide();
         }
