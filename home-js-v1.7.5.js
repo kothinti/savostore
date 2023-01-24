@@ -1,8 +1,8 @@
 $( document ).ready(function() {
       var rateperkg=30,totalcost,td_cost,intcust,shipprotection=0;
       var td_costv1,intcustv1,shipprotectionv1=0;
-      const cm_divider = 61023.80;
-      const cf_divider = 1728;
+      var cm_divider = 61023.80;
+      var cf_divider = 1728;
 
       const formatter = new Intl.NumberFormat('en-US', {
          minimumFractionDigits: 2,      
@@ -145,11 +145,15 @@ $( document ).ready(function() {
       	$('#dimensions-height-2').val() ? $('#dimensions-height-2').css({'border-color': '#737373'}) : $('#dimensions-height-2').css({'border-color': 'red'});
 				
         if($('#dimensions-length-2').val() && $('#dimensions-width-2').val() && $('#dimensions-height-2').val()){
-          var CBM = ($('#dimensions-length-2').val() * $('#dimensions-width-2').val() * $('#dimensions-height-2').val()) / cm_divider;
+          
+	  var CBM = ($('#dimensions-length-2').val() * $('#dimensions-width-2').val() * $('#dimensions-height-2').val()) / cm_divider;
           var CBF = ($('#dimensions-length-2').val() * $('#dimensions-width-2').val() * $('#dimensions-height-2').val()) / cf_divider;
-          $("#total-cost-1").text(formatter.format(CBF*rateperkg));
+          
+	  $("#total-cost-1").text(formatter.format(CBF*rateperkg));
+		
           $("#form-cbm").html(parseFloat(CBM).toFixed(2));
           $("#form-cbf").html(parseFloat(CBF).toFixed(2));
+	
           $('.note__about-cost').show();
           
           td_cost = (CBM > CBF) ? (CBM*0.60) : (CBF*0.60);
