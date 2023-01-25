@@ -152,6 +152,8 @@ $( document ).ready(function() {
           var CBF = ($('#dimensions-length-2').val() * $('#dimensions-width-2').val() * $('#dimensions-height-2').val()) / cf_divider;
           
 	  td_cost = CBF*rateperkg;
+	  td_cost = (CBF < 250) ? 250 : CBF;
+	  intcust = td_cost;
 		
           $("#form-cbm").html(parseFloat(CBM).toFixed(2));
           $("#form-cbf").html(parseFloat(CBF).toFixed(2));
@@ -164,10 +166,7 @@ $( document ).ready(function() {
 	  Min shipping cost should be $250
 	  */
           
-          td_cost = (CBF < 250) ? 250 : CBF;
-	  intcust = td_cost;
-	
-	  $("#total-cost-1").text(formatter.format(CBF*rateperkg));
+	  $("#total-cost-1").text(formatter.format(td_cost));
          
           $('.intcustom').text("$"+parseFloat(intcust).toFixed(2));
 		
