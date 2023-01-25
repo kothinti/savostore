@@ -151,8 +151,8 @@ $( document ).ready(function() {
 	  var CBM = ($('#dimensions-length-2').val() * $('#dimensions-width-2').val() * $('#dimensions-height-2').val()) / cm_divider;
           var CBF = ($('#dimensions-length-2').val() * $('#dimensions-width-2').val() * $('#dimensions-height-2').val()) / cf_divider;
           
-	  td_cost = CBF*rateperkg;
-	  td_cost = (CBF < 250) ? 250 : CBF;
+	  td_cost = CBF*30;
+	  td_cost = (td_cost < 250) ? 250 : td_cost;
 	  intcust = td_cost;
 		
           $("#form-cbm").html(parseFloat(CBM).toFixed(2));
