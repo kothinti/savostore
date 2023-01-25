@@ -108,9 +108,9 @@ $( document ).ready(function() {
 		$('.shipping-amount').val('');
 
 		if($('[name="home-delivery"]').is(':checked')) {
-		   $("#total-cost-1").html(formatter.format(parseFloat(intcust)+parseFloat(shipprotection)+parseFloat(td_cost)));
+		   $("#total-cost-1").html(formatter.format(parseFloat(shipprotection)+parseFloat(td_cost)));
 		}else{
-		   $("#total-cost-1").html(formatter.format(parseFloat(intcust)));
+		   $("#total-cost-1").html(formatter.format(parseFloat(td_cost)));
 		}
         };
       });
