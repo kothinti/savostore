@@ -154,7 +154,7 @@ $( document ).ready(function() {
 	  td_cost = CBF*30;
 	  td_cost = (td_cost < 250) ? 250 : td_cost;
 	  intcust = td_cost;
-	  homedelivery = parseFloat(CBF*2.5).toFixed(2);
+	  homedelivery = CBF*2.5;
 		
           $("#form-cbm").html(parseFloat(CBM).toFixed(2));
           $("#form-cbf").html(parseFloat(CBF).toFixed(2));
