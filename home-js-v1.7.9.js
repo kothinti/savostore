@@ -131,6 +131,7 @@ $( document ).ready(function() {
     
   $('.shipping-amount').on('input', function() {
     	shipprotection = ($(this).val() < 100) ? 0 : ($(this).val()*5)/100;
+	  
        $('.chk-shipment-protection-val').text("$"+formatter.format(parseFloat(shipprotection)));
 	
 	if($('[name="home-delivery"]').is(':checked')) {
@@ -150,7 +151,7 @@ $( document ).ready(function() {
 	  var CBM = ($('#dimensions-length-2').val() * $('#dimensions-width-2').val() * $('#dimensions-height-2').val()) / cm_divider;
           var CBF = ($('#dimensions-length-2').val() * $('#dimensions-width-2').val() * $('#dimensions-height-2').val()) / cf_divider;
           
-	  $("#total-cost-1").text(formatter.format(CBF*rateperkg));
+	  td_cost = CBF*rateperkg;
 		
           $("#form-cbm").html(parseFloat(CBM).toFixed(2));
           $("#form-cbf").html(parseFloat(CBF).toFixed(2));
@@ -164,8 +165,9 @@ $( document ).ready(function() {
 	  */
           
           td_cost = (CBF < 250) ? 250 : CBF;
-	  intcust = CBF * 30;
-		
+	  intcust = td_cost;
+	
+	  $("#total-cost-1").text(formatter.format(CBF*rateperkg));
          
           $('.intcustom').text("$"+parseFloat(intcust).toFixed(2));
 		
