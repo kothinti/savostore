@@ -1,6 +1,6 @@
 $( document ).ready(function() {
       var rateperkg=30,totalcost,td_cost,intcust,shipprotection=0;
-      var td_costv1,intcustv1,shipprotectionv1=0;
+      var td_costv1,intcustv1,shipprotectionv1=0,homedelivery=0;
       var cm_divider = 61023.80;
       var cf_divider = 1728;
 
@@ -121,7 +121,7 @@ $( document ).ready(function() {
         if ($(this).is(':checked')) {
            $('.chk-home-delivery-val').show();
            console.log(parseFloat(intcust) +"/"+ td_cost +"/"+parseFloat(shipprotection));
-           $("#total-cost-1").html(formatter.format(parseFloat(intcust)+parseFloat(td_cost)+parseFloat(shipprotection)));
+           $("#total-cost-1").html(formatter.format(parseFloat(td_cost)+parseFloat(shipprotection)+homedelivery));
         }else{
        	   $('.chk-home-delivery-val').hide();
            $("#total-cost-1").html(formatter.format(parseFloat(intcust)+parseFloat(shipprotection)));
@@ -154,6 +154,7 @@ $( document ).ready(function() {
 	  td_cost = CBF*30;
 	  td_cost = (td_cost < 250) ? 250 : td_cost;
 	  intcust = td_cost;
+	  homedelivery = parseFloat(CBF*2.5).toFixed(2);
 		
           $("#form-cbm").html(parseFloat(CBM).toFixed(2));
           $("#form-cbf").html(parseFloat(CBF).toFixed(2));
@@ -169,7 +170,7 @@ $( document ).ready(function() {
 	  $("#total-cost-1").text(formatter.format(td_cost));
          
           $('.intcustom').text("$"+parseFloat(intcust).toFixed(2));
-		
+	
           $('.chk-home-delivery-val').text("$"+parseFloat(CBF*2.5).toFixed(2));
           
           if ($('[name="home-delivery"]').is(':checked')) {
