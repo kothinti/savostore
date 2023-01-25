@@ -168,13 +168,8 @@ $( document ).ready(function() {
 		
          
           $('.intcustom').text("$"+parseFloat(intcust).toFixed(2));
-          
-          if(td_cost > 3){
-          	$('.chk-home-delivery-val').text("$"+parseFloat(td_cost).toFixed(2));
-          }else{
-          	td_cost = 3;
-          	$('.chk-home-delivery-val').text("$3.00");
-          }
+		
+          $('.chk-home-delivery-val').text("$"+parseFloat(CBF*2.5).toFixed(2));
           
           if ($('[name="home-delivery"]').is(':checked')) {
            $("#total-cost-1").html(formatter.format(parseFloat(intcust)+parseFloat(td_cost)+parseFloat(shipprotection)));
