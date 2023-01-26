@@ -1,6 +1,6 @@
 $( document ).ready(function() {
       var rateperkg=30,totalcost,td_cost,intcust,shipprotection=0;
-      var td_costv1,intcustv1,shipprotectionv1=0,homedelivery=0;
+      var td_costv1,intcustv1,shipprotectionv1=0,homedelivery=0,homedeliveryv1=0;
       var cm_divider = 61023.80;
       var cf_divider = 1728;
 
@@ -10,7 +10,7 @@ $( document ).ready(function() {
       });
 	  
       $('.cost-calc input').on('input', function() {
-        
+	
 	$('#dimensions-length').val() ? $('#dimensions-length').css({'border-color': '#737373'}) : $('#dimensions-length').css({'border-color': 'red'});
       	$('#dimensions-width').val() ? $('#dimensions-width').css({'border-color': '#737373'}) : $('#dimensions-width').css({'border-color': 'red'});
       	$('#dimensions-height').val() ? $('#dimensions-height').css({'border-color': '#737373'}) : $('#dimensions-height').css({'border-color': 'red'});
@@ -18,30 +18,26 @@ $( document ).ready(function() {
         if($('#dimensions-length').val() && $('#dimensions-width').val() && $('#dimensions-height').val()){
           var CBM = ($('#dimensions-length').val() * $('#dimensions-width').val() * $('#dimensions-height').val()) / cm_divider;
           var CBF = ($('#dimensions-length').val() * $('#dimensions-width').val() * $('#dimensions-height').val()) / cf_divider;
+          
+          td_costv1 = CBF*30;
+          td_costv1 = (td_costv1 < 250) ? 250 : td_costv1;
+          intcustv1 = td_costv1;
+          homedeliveryv1 = CBF*2.5;
 		
-          $("#total-cost-v1").text(formatter.format(CBF*rateperkg));
-	  
           $("#form-cbm-v1").html(parseFloat(CBM).toFixed(2));
           $("#form-cbf-v1").html(parseFloat(CBF).toFixed(2));
+	
           $('.note__about-cost-v1').show();
-          
-		
-          td_costv1 = (CBM > CBF) ? (CBM*0.60) : (CBF*0.60);
-          intcustv1 = (CBM > CBF) ? (CBM*15) : (CBF*15);
-          
+
+          $("#total-cost-v1").text(formatter.format(td_costv1));
           $('.intcustom-v1').text("$"+parseFloat(intcustv1).toFixed(2));
-          
-          if(td_costv1 > 3){
-          	$('.chk-home-delivery-val-v1').text("$"+parseFloat(td_costv1).toFixed(2));
-          }else{
-          	td_costv1 = 3;
-          	$('.chk-home-delivery-val-v1').text("$3.00");
-          }
-          
+	  
+          $('.chk-home-delivery-val-v1').text("$"+parseFloat(homedeliveryv1).toFixed(2));
+
           if ($('[name="home-delivery-v1"]').is(':checked')) {
-           $("#total-cost-v1").html(formatter.format(parseFloat(intcust)+parseFloat(td_costv1)+parseFloat(shipprotection)));
+            $("#total-cost-v1").html(formatter.format(parseFloat(td_costv1)+parseFloat(shipprotectionv1)+parseFloat(homedeliveryv1)));
           }else{
-             $("#total-cost-v1").html(formatter.format(parseFloat(intcustv1)+parseFloat(shipprotection)));
+             $("#total-cost-v1").html(formatter.format(parseFloat(td_costv1)+parseFloat(shipprotectionv1)));
           }
         }else{
             $('.note__about-cost-v1').hide();
@@ -60,10 +56,10 @@ $( document ).ready(function() {
           $('.chk-shipment-protection-val-v1').text('');
           $('.shipping-amount-v1').val('');
 
-          if($('[name="home-delivery-v1"]').is(':checked')) {
-             $("#total-cost-v1").html(formatter.format(parseFloat(intcustv1)+parseFloat(shipprotectionv1)+parseFloat(td_costv1)));
+          if($('[name="home-delivery"]').is(':checked')) {
+            $("#total-cost-v1").html(formatter.format(parseFloat(shipprotectionv1+td_costv1+homedeliveryv1)));
           }else{
-             $("#total-cost-v1").html(formatter.format(parseFloat(intcustv1)));
+            $("#total-cost-v1").html(formatter.format(parseFloat(td_costv1+shipprotectionv1)));
           }
         };
       });
@@ -72,27 +68,26 @@ $( document ).ready(function() {
     $('.chk-home-delivery-val-v1').hide();
 	  
     $(function(){
-      $('[name="home-delivery-v1"]').change(function(){
-        if ($(this).is(':checked')) {
-           $('.chk-home-delivery-val-v1').show();
-           console.log(parseFloat(intcustv1) +"/"+ td_cost +"/"+parseFloat(shipprotectionv1));
-           $("#total-cost-v1").html(formatter.format(parseFloat(intcustv1)+parseFloat(td_costv1)+parseFloat(shipprotectionv1)));
-        }else{
-            $('.chk-home-delivery-val-v1').hide();
-            $("#total-cost-v1").html(formatter.format(parseFloat(intcustv1)+parseFloat(shipprotectionv1)));
-        }
-      });
-    });
+	  $('[name="home-delivery-v1"]').change(function(){
+	    if ($(this).is(':checked')) {
+	       $('.chk-home-delivery-val-v1').show();
+	       $("#total-cost-v1").html(formatter.format(parseFloat(td_costv1)+parseFloat(shipprotectionv1)+homedeliveryv1));
+	    }else{
+		$('.chk-home-delivery-val-v1').hide();
+		$("#total-cost-v1").html(formatter.format(parseFloat(td_costv1)+parseFloat(shipprotectionv1)));
+	    }
+	  });
+     });
     
   $('.shipping-amount-v1').on('input', function() {
-    	shipprotectionv1 = ($(this).val() < 100) ? 0 : ($(this).val()*5)/100;
-       $('.chk-shipment-protection-val-v1').text("$"+formatter.format(parseFloat(shipprotectionv1)));
-	  
-	if($('[name="home-delivery-v1"]').is(':checked')) {
-	   $("#total-cost-v1").html(formatter.format(parseFloat(shipprotectionv1)+parseFloat(intcustv1)+parseFloat(td_costv1)));
-	}else{
-	   $("#total-cost-v1").html(formatter.format(parseFloat(shipprotectionv1)+parseFloat(intcustv1)));
-	}
+	  shipprotectionv1 = ($(this).val() < 100) ? 0 : ($(this).val()*5)/100;
+	   $('.chk-shipment-protection-val-v1').text("$"+formatter.format(parseFloat(shipprotectionv1)));
+
+	  if($('[name="home-delivery-v1"]').is(':checked')) {
+	   $("#total-cost-v1").html(formatter.format(parseFloat(shipprotectionv1)+homedeliveryv1+parseFloat(td_costv1)));
+	  }else{
+	    $("#total-cost-v1").html(formatter.format(parseFloat(shipprotectionv1+td_costv1)));
+	  }
     });
     
     $(function()
@@ -168,7 +163,7 @@ $( document ).ready(function() {
           $('.chk-home-delivery-val').text("$"+parseFloat(CBF*2.5).toFixed(2));
           
           if ($('[name="home-delivery"]').is(':checked')) {
-           $("#total-cost-1").html(formatter.format(parseFloat(td_cost)+parseFloat(shipprotection)));
+           $("#total-cost-1").html(formatter.format(parseFloat(td_cost)+parseFloat(shipprotection)+parseFloat(homedelivery)));
           }else{
              $("#total-cost-1").html(formatter.format(parseFloat(td_cost)+parseFloat(shipprotection)));
           }
