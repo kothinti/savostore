@@ -56,7 +56,7 @@ $( document ).ready(function() {
           $('.chk-shipment-protection-val-v1').text('');
           $('.shipping-amount-v1').val('');
 
-          if($('[name="home-delivery"]').is(':checked')) {
+          if($('[name="home-delivery-v1"]').is(':checked')) {
             $("#total-cost-v1").html(formatter.format(parseFloat(shipprotectionv1+td_costv1+homedeliveryv1)));
           }else{
             $("#total-cost-v1").html(formatter.format(parseFloat(td_costv1+shipprotectionv1)));
