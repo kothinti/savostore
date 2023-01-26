@@ -160,13 +160,7 @@ $( document ).ready(function() {
           $("#form-cbf").html(parseFloat(CBF).toFixed(2));
 	
           $('.note__about-cost').show();
-		
-	  /*
-	  home delivery = Cubic feet * 2.5
-	  Shipment protection = 5% of entered value
-	  Min shipping cost should be $250
-	  */
-          
+	
 	  $("#total-cost-1").text(formatter.format(td_cost));
          
           $('.intcustom').text("$"+parseFloat(intcust).toFixed(2));
@@ -174,9 +168,9 @@ $( document ).ready(function() {
           $('.chk-home-delivery-val').text("$"+parseFloat(CBF*2.5).toFixed(2));
           
           if ($('[name="home-delivery"]').is(':checked')) {
-           $("#total-cost-1").html(formatter.format(parseFloat(intcust)+parseFloat(td_cost)+parseFloat(shipprotection)));
+           $("#total-cost-1").html(formatter.format(parseFloat(td_cost)+parseFloat(shipprotection)));
           }else{
-             $("#total-cost-1").html(formatter.format(parseFloat(intcust)+parseFloat(shipprotection)));
+             $("#total-cost-1").html(formatter.format(parseFloat(td_cost)+parseFloat(shipprotection)));
           }
 		
         }else{
