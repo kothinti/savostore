@@ -31,7 +31,7 @@ $( document ).ready(function() {
           $("#os-total-cost").text(formatter.format(os_totalcost));
           $('.os-intcustom-v1').text("$"+parseFloat(os_intcust).toFixed(2));
 	  
-          $('.os-chk-home-delivery-val-v1').text("$"+parseFloat(os_home_delivery).toFixed(2));
+          $('.os-chk-home-delivery-val').text("$"+parseFloat(os_home_delivery).toFixed(2));
 
           if ($('[name="os-home-delivery-v1"]').is(':checked')) {
             $("#os-total-cost").html(formatter.format(parseFloat(os_totalcost)+parseFloat(os_shipprotection)+parseFloat(os_home_delivery)));
@@ -63,8 +63,7 @@ $( document ).ready(function() {
         };
       });
     });
-    
-    $('.os-chk-home-delivery-val-v1').hide();
+    $('.os-chk-home-delivery-val').hide();
 	  
     $(function(){
   	  $('[name="os-home-delivery-v1"]').change(function(){
@@ -72,12 +71,23 @@ $( document ).ready(function() {
   	       $('.os-chk-home-delivery-val').show();
   	       $("#os-total-cost").html(formatter.format(parseFloat(os_totalcost)+parseFloat(os_shipprotection)+os_home_delivery));
   	    }else{
-  		    $('.os-chk-home-delivery-val').hide();
-  		    $("#os-total-cost").html(formatter.format(parseFloat(os_totalcost)+parseFloat(os_shipprotection)));
+  		$('.os-chk-home-delivery-val').hide();
+  		$("#os-total-cost").html(formatter.format(parseFloat(os_totalcost)+parseFloat(os_shipprotection)));
   	    }
   	  });
      });
-  
+    
+    $('.os-shipping-amount').on('input', function() {
+    	os_shipprotection = ($(this).val() < 100) ? 0 : ($(this).val()*5)/100;
+	  
+       $('.os-chk-shipment-protection-val').text("$"+formatter.format(parseFloat(os_shipprotection)));
+	
+	if($('[name="os-home-delivery-v1"]').is(':checked')) {
+	   $("#os-total-cost").html(formatter.format(parseFloat(os_shipprotection+os_home_delivery+os_totalcost)));
+	}else{
+	   $("#os-total-cost").html(formatter.format(parseFloat(os_shipprotection+os_totalcost)));
+	}
+    });
 	  
       $('.cost-calc input').on('input', function() {
         $('#actual-weight').val() ? $('#actual-weight').css({'border-color': '#737373'}) : $('#actual-weight').css({'border-color': 'red'});
