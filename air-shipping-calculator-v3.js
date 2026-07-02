@@ -22,8 +22,7 @@ $(document).ready(function () {
   }
 
   function isValidInput($input) {
-    const value = getInputNumber($input);
-    return value > 0;
+    return getInputNumber($input) > 0;
   }
 
   function updateInputBorder($input, isValid) {
@@ -55,28 +54,28 @@ $(document).ready(function () {
   }
 
   function getCheckboxInput($element) {
-  if ($element.is('input[type="checkbox"]')) {
-    return $element;
+    if ($element.is('input[type="checkbox"]')) {
+      return $element;
+    }
+
+    const $childCheckbox = $element.find('input[type="checkbox"]').first();
+
+    if ($childCheckbox.length) {
+      return $childCheckbox;
+    }
+
+    const $parentCheckbox = $element
+      .closest('label, .w-checkbox, .w-checkbox-field')
+      .find('input[type="checkbox"]')
+      .first();
+
+    if ($parentCheckbox.length) {
+      return $parentCheckbox;
+    }
+
+    return $();
   }
 
-  const $childCheckbox = $element.find('input[type="checkbox"]').first();
-
-  if ($childCheckbox.length) {
-    return $childCheckbox;
-  }
-
-  const $parentCheckbox = $element
-    .closest('label, .w-checkbox, .w-checkbox-field')
-    .find('input[type="checkbox"]')
-    .first();
-
-  if ($parentCheckbox.length) {
-    return $parentCheckbox;
-  }
-
-  return $();
-}
-  
   function initializeShippingCalculator(calculatorElement) {
     const $calculator = $(calculatorElement);
 
@@ -85,9 +84,14 @@ $(document).ready(function () {
     const $heightInput = $calculator.find('.js-height-input');
     const $actualWeightInput = $calculator.find('.js-actual-weight-input');
 
-    const $homeDeliveryCheckbox = getCheckboxInput($calculator.find('.js-home-delivery-checkbox'));
-    const $shipmentProtectionCheckbox = getCheckboxInput($calculator.find('.js-shipment-protection-checkbox'));
-    
+    const $homeDeliveryCheckbox = getCheckboxInput(
+      $calculator.find('.js-home-delivery-checkbox')
+    );
+
+    const $shipmentProtectionCheckbox = getCheckboxInput(
+      $calculator.find('.js-shipment-protection-checkbox')
+    );
+
     const $shipmentProtectionField = $calculator.find('.js-shipment-protection-field');
     const $shipmentProtectionInput = $calculator.find('.js-shipment-protection-input');
 
@@ -110,16 +114,16 @@ $(document).ready(function () {
       updateInputBorder($heightInput, isHeightValid);
       updateInputBorder($actualWeightInput, isActualWeightValid);
 
+      const isShipmentProtectionSelected =
+        $shipmentProtectionCheckbox.is(':checked');
+
+      $shipmentProtectionField.toggle(isShipmentProtectionSelected);
+
       const allRequiredFieldsValid =
         isLengthValid &&
         isWidthValid &&
         isHeightValid &&
         isActualWeightValid;
-
-      const isShipmentProtectionSelected =
-        $shipmentProtectionCheckbox.is(':checked');
-
-      $shipmentProtectionField.toggle(isShipmentProtectionSelected);
 
       if (!allRequiredFieldsValid) {
         $costNote.hide();
@@ -180,17 +184,23 @@ $(document).ready(function () {
       $costNote.show();
     }
 
+    $lengthInput.on('input', updateCalculator);
+    $widthInput.on('input', updateCalculator);
+    $heightInput.on('input', updateCalculator);
+    $actualWeightInput.on('input', updateCalculator);
+    $shipmentProtectionInput.on('input', updateCalculator);
+
     $homeDeliveryCheckbox.on('change', updateCalculator);
 
     $shipmentProtectionCheckbox.on('change', function () {
       const isChecked = $(this).is(':checked');
-    
+
       $shipmentProtectionField.toggle(isChecked);
-    
+
       if (!isChecked) {
         $shipmentProtectionInput.val('');
       }
-    
+
       updateCalculator();
     });
 
