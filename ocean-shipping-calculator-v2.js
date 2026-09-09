@@ -78,7 +78,7 @@ $( document ).ready(function() {
      });
     
     $('.os-shipping-amount').on('input', function() {
-    	os_shipprotection = ($(this).val() < 100) ? 0 : ($(this).val()*5)/100;
+    	os_shipprotection = ($(this).val() < 100) ? 0 : ($(this).val()*4)/100;
 	  
        $('.os-chk-shipment-protection-val').text("$"+formatter.format(parseFloat(os_shipprotection)));
 	
